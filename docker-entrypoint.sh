@@ -21,5 +21,5 @@ cd /tmp && tar -C /opt -xzvf processmaker-3.2.1.tar.gz
 chown -R nginx. /opt/processmaker
 
 # Start services
-chkconfig nginx on && chkconfig php-fpm pn
+chkconfig nginx on && chkconfig php-fpm on
 service nginx start && service php-fpm start
