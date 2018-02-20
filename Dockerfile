@@ -15,7 +15,7 @@ RUN yum clean all && yum install epel-release -y && yum update -y
 # Required packages
 RUN yum install \
   wget \
-  nano \ 
+  nano \
   nginx \
   php56-fpm \
   php56-opcache \
