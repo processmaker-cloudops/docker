@@ -19,3 +19,7 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 # Decompress ProcessMaker
 cd /tmp && tar -C /opt -xzvf processmaker-3.2.1.tar.gz
 chown -R nginx. /opt/processmaker
+
+# Start services
+chkconfig nginx on && chkconfig php-fpm pn
+service nginx start && service php-fpm start
