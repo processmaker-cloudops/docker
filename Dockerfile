@@ -1,5 +1,6 @@
 # Base Image
 FROM amazonlinux:2017.09
+CMD ["/bin/bash"]
 
 # Maintainer
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
