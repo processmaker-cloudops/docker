@@ -10,7 +10,7 @@ LABEL version="3.2.1"
 LABEL description="ProcessMaker 3.2.1 Docker Container."
 
 # Initial steps
-RUN yum clean all && yum install epel-release && yum update -y
+RUN yum clean all && yum install epel-release -y && yum update -y
 
 # Required packages
 RUN yum install -y \
