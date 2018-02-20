@@ -22,4 +22,5 @@ chown -R nginx. /opt/processmaker
 
 # Start services
 chkconfig nginx on && chkconfig php-fpm on
+touch /etc/sysconfig/network
 service nginx start && service php-fpm start
