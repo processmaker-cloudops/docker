@@ -13,7 +13,7 @@ LABEL description="ProcessMaker 3.2.1 Docker Container."
 RUN yum clean all && yum install epel-release -y && yum update -y
 
 # Required packages
-RUN yum install -y \
+RUN yum install \
   wget \
   nano \ 
   nginx \
@@ -25,6 +25,7 @@ RUN yum install -y \
   php56-mbstring \
   php56-ldap \
   php56-mcrypt \
+  -y
   
 # Download ProcessMaker Enterprise Edition
 RUN wget -O "/tmp/processmaker-3.2.1.tar.gz" \
