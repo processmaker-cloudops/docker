@@ -16,6 +16,7 @@ RUN yum clean all && yum install epel-release -y && yum update -y
 RUN yum install \
   wget \
   nano \
+  sendmail \
   nginx \
   php56-fpm \
   php56-opcache \
