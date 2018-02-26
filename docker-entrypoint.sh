@@ -21,6 +21,10 @@ cd /tmp && tar -C /opt -xzvf processmaker-3.2.1.tar.gz
 chown -R nginx. /opt/processmaker
 
 # Start services
+cp /etc/hosts ~/hosts.new
+sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
+chkconfig sendmail on && service sendmail start
 chkconfig nginx on && chkconfig php-fpm on
 touch /etc/sysconfig/network
 service php-fpm start && nginx -g 'daemon off;'
