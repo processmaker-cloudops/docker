@@ -44,6 +44,5 @@ EXPOSE 80
 
 # Docker entrypoint
 COPY docker-entrypoint.sh /bin/
-COPY processmaker.conf /etc/nginx/conf.d/
 RUN chmod a+x /bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
