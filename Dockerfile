@@ -30,8 +30,8 @@ RUN yum install \
   -y
   
 # Download ProcessMaker Enterprise Edition
-RUN wget -O "/tmp/processmaker-3.2.2.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.2.2.tar.gz"
+RUN wget -O "/tmp/processmaker-3.1.3.tar.gz" \
+      "https://bitnami.processmaker.com/official/processmaker-3.1.3.tar.gz"
 	  
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
