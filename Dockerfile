@@ -6,8 +6,8 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.2.2"
-LABEL description="ProcessMaker 3.2.2 Docker Container."
+LABEL version="3.1.3"
+LABEL description="ProcessMaker 3.1.3 Docker Container."
 
 # Initial steps
 RUN yum clean all && yum install epel-release -y && yum update -y
