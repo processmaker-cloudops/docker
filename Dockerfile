@@ -1,5 +1,5 @@
 # Base Image
-FROM amazonlinux:2018.03
+FROM amazonlinux:2017.09
 CMD ["/bin/bash"]
 
 # Maintainer
