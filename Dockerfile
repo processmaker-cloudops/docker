@@ -6,7 +6,7 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.2.2"
+LABEL version="3.2.3"
 LABEL description="ProcessMaker 3.2.3 Docker Container."
 
 # Initial steps
