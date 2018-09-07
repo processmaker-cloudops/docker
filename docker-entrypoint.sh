@@ -27,6 +27,9 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini
 # Create shared sites dir
 mkdir /opt/processmaker/shared/sites
 
+# Add sleep to allow processes to finish
+sleep 3
+
 # Workspace Restore for Enterprise Bundle
 cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar
 cd /opt/processmaker && ./processmaker upgrade && ./processmaker flush-cache
