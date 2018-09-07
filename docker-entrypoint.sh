@@ -25,11 +25,11 @@ cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini
 
 # Create shared sites dir
-mkdir /opt/processmaker/shared/sites
+#mkdir /opt/processmaker/shared/sites
 
 # Workspace Restore for Enterprise Bundle
 cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar
-y | ./processmaker upgrade && ./processmaker flush-cache
+cd /opt/processmaker && ./processmaker upgrade && ./processmaker flush-cache
 
 # Give Nginx ownership of new files
 chown -R nginx:nginx /opt/processmaker
