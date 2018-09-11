@@ -31,7 +31,7 @@ mkdir /opt/processmaker/shared/sites
 sleep 3
 
 # Workspace Restore for Enterprise Bundle
-cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar
+cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE
 cd /opt/processmaker && ./processmaker upgrade && ./processmaker flush-cache
 
 # Give Nginx ownership of new files
