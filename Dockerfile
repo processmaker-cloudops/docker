@@ -9,6 +9,10 @@ MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 LABEL version="3.2.3"
 LABEL description="ProcessMaker 3.2.3 Docker Container."
 
+# Declare ARGS and ENV Variable
+ARG WORKSPACE
+ENV WORKSPACE $WORKSPACE
+
 # Initial steps
 RUN yum clean all && yum install epel-release -y && yum update -y
 RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new && cp -f ~/hosts.new /etc/hosts
