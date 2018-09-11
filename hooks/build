@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -t testing --build-arg WORKSPACE=$WORKSPACE
+docker build -t testing --build-arg WORKSPACE=$WORKSPACE .
