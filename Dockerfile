@@ -37,7 +37,7 @@ RUN yum install \
   
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
 RUN wget -O "/tmp/processmaker-3.2.3.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.2.3-trial.tar.gz"
+      "https://artifacts.processmaker.net/generic/processmaker-3.2.3-trial.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
       "https://artifacts.processmaker.net/generic/bundle.tar.gz"
 
