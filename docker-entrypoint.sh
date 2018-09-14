@@ -18,14 +18,10 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 
 # Decompress ProcessMaker and Plugins
 cd /tmp && tar -C /opt -xzvf processmaker-3.2.3.tar.gz
-cd /tmp && tar -C /opt/processmaker/workflow/engine -xzvf plugins.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 
 # Update memory to 512MB
 sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini
-
-# Create shared sites dir
-mkdir /opt/processmaker/shared/sites
 
 # Add sleep to allow processes to finish
 sleep 3
@@ -35,7 +31,7 @@ cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $W
 cd /opt/processmaker && ./processmaker upgrade && ./processmaker flush-cache
 
 # Give Nginx ownership of new files
-chown -R nginx:nginx /opt/processmaker
+chown -R nginx. /opt/processmaker
 
 # Start services
 cp /etc/hosts ~/hosts.new
