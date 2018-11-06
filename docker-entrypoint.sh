@@ -9,9 +9,6 @@ sed -i '/;date.timezone =/c\date.timezone = America/New_York' /etc/php.ini
 sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini
 sed -i '/expose_php = On/c\expose_php = Off' /etc/php.ini
 
-# Set user email for Intercom
-sed -i 's/se@processmaker.com/${EMAIL}/g' /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
-
 # OpCache configurations
 sed -i '/;opcache.enable_cli=0/c\opcache.enable_cli=1' /etc/php.d/10-opcache.ini
 sed -i '/opcache.max_accelerated_files=4000/c\opcache.max_accelerated_files=10000' /etc/php.d/10-opcache.ini
@@ -24,6 +21,8 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 cd /tmp && tar -C /opt -xzvf processmaker-3.3.0.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 
+# Set user email for Intercom
+sed -i \"s/se@processmaker.com/${EMAIL}/g\" /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
 
 # Add sleep to allow processes to finish
 sleep 3
