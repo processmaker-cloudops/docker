@@ -22,7 +22,7 @@ cd /tmp && tar -C /opt -xzvf processmaker-3.3.0.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 
 # Set user email for Intercom
-sed -i `"s/se@processmaker.com/${EMAIL}/g`" /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
+sed -i 's,se@processmaker.com,'"${EMAIL}"',g' /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
 
 # Add sleep to allow processes to finish
 sleep 3
