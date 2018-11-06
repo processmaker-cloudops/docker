@@ -10,7 +10,7 @@ sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php.ini
 sed -i '/expose_php = On/c\expose_php = Off' /etc/php.ini
 
 # Set user email for Intercom
-sed -i \"s/se@processmaker.com/${EMAIL}/g\" /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
+sed -i 's/se@processmaker.com/${EMAIL}/g' /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
 
 # OpCache configurations
 sed -i '/;opcache.enable_cli=0/c\opcache.enable_cli=1' /etc/php.d/10-opcache.ini
