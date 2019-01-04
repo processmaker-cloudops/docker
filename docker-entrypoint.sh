@@ -30,6 +30,8 @@ sleep 3
 # Workspace Restore for Enterprise Bundle
 cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE
 cd /opt/processmaker && ./processmaker flush-cache
+cd /opt/processmaker/workflow/engine/bin
+php -f cron.php calculated && php -f cron.php calculatedapp && php -f cron.php report_by_user +init-date"2018-01-01" && php -f cron.php report_by_process +init-date"2018-01-01"
 
 # Set file ownership
 chown -R nginx. /opt/processmaker
