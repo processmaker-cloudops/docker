@@ -39,9 +39,9 @@ RUN yum install \
   
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
 RUN wget -O "/tmp/processmaker-3.3.1.tar.gz" \
-      "https://artifacts.processmaker.net/generic/processmaker-3.3.1-trial.tar.gz"
+      "https://artifacts.processmaker.net/trial/processmaker-3.3.1-trial.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
-      "https://artifacts.processmaker.net/generic/bundle-3.3.1.tar.gz"
+      "https://artifacts.processmaker.net/trial/bundle-3.3.1.tar.gz"
 
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
