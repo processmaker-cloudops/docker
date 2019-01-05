@@ -6,7 +6,7 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.3.0"
+LABEL version="3.3.1"
 LABEL description="ProcessMaker 3.3.1 Enterprise Trial Container."
 
 # Declare ARGS and ENV Variable
@@ -39,7 +39,7 @@ RUN yum install \
   
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
 RUN wget -O "/tmp/processmaker-3.3.1.tar.gz" \
-      "https://artifacts.processmaker.net/trial/processmaker-3.3.1-trial.tar.gz"
+      "https://artifacts.processmaker.net/trial/processmaker-3.3.1.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
       "https://artifacts.processmaker.net/trial/bundle-3.3.1.tar.gz"
 
