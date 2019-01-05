@@ -24,6 +24,9 @@ cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 # Set user email for Intercom
 sed -i 's,se@processmaker.com,'"${EMAIL}"',g' /opt/processmaker/workflow/engine/plugins/intercom/getUserInfo.php
 
+# Set NGINX server_name
+sed -i 's,server_name ~^.*$;,server_name '"${WORKSPACE}"'.trial.processmaker.net;,g' /etc/nginx/conf.d/processmaker.conf 
+
 # Add sleep to allow processes to finish
 sleep 3
 
