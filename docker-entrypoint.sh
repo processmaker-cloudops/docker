@@ -27,7 +27,7 @@ sed -i 's,se@processmaker.com,'"${EMAIL}"',g' /opt/processmaker/workflow/engine/
 # Add sleep to allow processes to finish
 sleep 3
 
-# Workspace Restore for Enterprise Bundle
+# Workspace restore for Enterprise Bundle
 cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE
 cd /opt/processmaker && ./processmaker flush-cache
 cd /opt/processmaker/workflow/engine/bin
