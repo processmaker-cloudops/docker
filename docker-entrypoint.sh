@@ -40,6 +40,9 @@ php -f cron.php calculated && php -f cron.php calculatedapp && php -f cron.php r
 chown -R nginx. /opt/processmaker
 chown root. /opt/processmaker/workflow/engine/config/blacklist.ini
 
+# Run updateEmail.php
+cd /var/tmp && php updateEmail.php $WORKSPACE $EMAIL
+
 # Start services
 cp /etc/hosts ~/hosts.new
 sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new
