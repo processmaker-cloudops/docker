@@ -36,7 +36,7 @@ RUN yum install \
   php71-ldap \
   php71-mcrypt \
   -y
-  
+
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
 RUN wget -O "/tmp/processmaker-3.3.1.tar.gz" \
       "https://artifacts.processmaker.net/trial/processmaker-3.3.1.tar.gz"
@@ -48,6 +48,7 @@ COPY processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
 COPY nginx.conf /etc/nginx
 COPY processmaker.conf /etc/nginx/conf.d
+COPY updateEmail.php /var/tmp
 
 # NGINX Ports
 EXPOSE 80
