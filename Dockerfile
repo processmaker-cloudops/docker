@@ -6,12 +6,14 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.2.3"
-LABEL description="ProcessMaker 3.2.3 Docker Container."
+LABEL version="3.3.6"
+LABEL description="ProcessMaker 3.3.6 Enterprise Trial Container."
 
 # Declare ARGS and ENV Variable
 ARG WORKSPACE
+ARG EMAIL
 ENV WORKSPACE $WORKSPACE
+ENV EMAIL $EMAIL
 
 # Initial steps
 RUN yum clean all && yum install epel-release -y && yum update -y
@@ -25,27 +27,28 @@ RUN yum install \
   sendmail \
   nginx \
   mysql56 \
-  php56-fpm \
-  php56-opcache \
-  php56-gd \
-  php56-mysqlnd \
-  php56-soap \
-  php56-mbstring \
-  php56-ldap \
-  php56-mcrypt \
+  php71-fpm \
+  php71-opcache \
+  php71-gd \
+  php71-mysqlnd \
+  php71-soap \
+  php71-mbstring \
+  php71-ldap \
+  php71-mcrypt \
   -y
-  
+
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
-RUN wget -O "/tmp/processmaker-3.2.3.tar.gz" \
-      "https://artifacts.processmaker.net/generic/processmaker-3.2.3-trial.tar.gz"
+RUN wget -O "/tmp/processmaker-3.3.6.tar.gz" \
+      "https://artifacts.processmaker.net/trial/processmaker-3.3.6.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
-      "https://artifacts.processmaker.net/generic/bundle.tar.gz"
+      "https://artifacts.processmaker.net/trial/bundle-3.3.6.tar.gz"
 
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
 COPY nginx.conf /etc/nginx
 COPY processmaker.conf /etc/nginx/conf.d
+COPY updateEmail.php /var/tmp
 
 # NGINX Ports
 EXPOSE 80
