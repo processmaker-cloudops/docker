@@ -18,7 +18,7 @@ sed -i '/;opcache.validate_timestamps=1/c\opcache.validate_timestamps=1' /etc/ph
 sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcache.ini
 
 # Decompress ProcessMaker and Plugins
-cd /tmp && tar -C /opt -xzvf processmaker-3.3.1.tar.gz
+cd /tmp && tar -C /opt -xzvf processmaker-3.3.6.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 
 # Set user email for Intercom
