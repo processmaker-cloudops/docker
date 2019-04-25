@@ -19,14 +19,14 @@ RUN yum install \
   nano \
   sendmail \
   nginx \
-  php56-fpm \
-  php56-opcache \
-  php56-gd \
-  php56-mysqlnd \
-  php56-soap \
-  php56-mbstring \
-  php56-ldap \
-  php56-mcrypt \
+  php71-fpm \
+  php71-opcache \
+  php71-gd \
+  php71-mysqlnd \
+  php71-soap \
+  php71-mbstring \
+  php71-ldap \
+  php71-mcrypt \
   -y
   
 # Download ProcessMaker Enterprise Edition
