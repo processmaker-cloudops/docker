@@ -20,6 +20,9 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 cd /tmp && tar -C /opt -xzvf processmaker-3.3.0.tar.gz
 chown -R nginx. /opt/processmaker
 
+# Set NGINX server_name
+sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/processmaker.conf
+
 # Start services
 cp /etc/hosts ~/hosts.new
 sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new
