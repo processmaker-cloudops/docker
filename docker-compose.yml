@@ -12,7 +12,7 @@ services:
    processmaker:
      depends_on:
      - mysql
-     image: processmaker/processmaker:3.3.8
+     image: processmaker/processmaker:3.3.9
      ports:
        - "80:80"
      restart: always

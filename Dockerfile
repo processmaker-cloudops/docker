@@ -6,8 +6,8 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.3.8"
-LABEL description="ProcessMaker 3.3.8 Docker Container."
+LABEL version="3.3.9"
+LABEL description="ProcessMaker 3.3.9 Docker Container."
 
 # Declare ARGS and ENV Variables
 ARG URL
@@ -20,6 +20,7 @@ RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localh
 # Required packages
 RUN yum install \
   wget \
+  vim \
   nano \
   sendmail \
   nginx \
@@ -34,8 +35,8 @@ RUN yum install \
   -y
   
 # Download ProcessMaker Enterprise Edition
-RUN wget -O "/tmp/processmaker-3.3.8.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.3.8.tar.gz"
+RUN wget -O "/tmp/processmaker-3.3.9.tar.gz" \
+      "https://artifacts.processmaker.net/official/processmaker-3.3.9.tar.gz"
 	  
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
