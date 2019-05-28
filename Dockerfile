@@ -7,9 +7,13 @@ MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
 LABEL version="3.3.10"
-LABEL description="ProcessMaker 3.3.10 Docker Container."
+LABEL description="ProcessMaker 3.3.10 Portainer Bundle Container."
 
-# Declare ARGS and ENV Variables
+# Declare ARGS and ENV Variable
+ARG WORKSPACE
+ARG EMAIL
+ENV WORKSPACE $WORKSPACE
+ENV EMAIL $EMAIL
 ARG URL
 ENV URL $URL
 
@@ -19,11 +23,12 @@ RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localh
 
 # Required packages
 RUN yum install \
-  wget \
   vim \
+  wget \
   nano \
   sendmail \
   nginx \
+  mysql56 \
   php71-fpm \
   php71-opcache \
   php71-gd \
@@ -33,16 +38,19 @@ RUN yum install \
   php71-ldap \
   php71-mcrypt \
   -y
-  
-# Download ProcessMaker Enterprise Edition
+
+# Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
 RUN wget -O "/tmp/processmaker-3.3.10.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.3.10.tar.gz"
-	  
+      "https://artifacts.processmaker.net/trial/processmaker-3.3.10.tar.gz"
+RUN wget -O "/tmp/bundle.tar.gz" \
+      "https://artifacts.processmaker.net/trial/bundle-3.3.10.tar.gz"
+
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
 COPY nginx.conf /etc/nginx
 COPY processmaker.conf /etc/nginx/conf.d
+COPY updateEmail.php /var/tmp
 
 # NGINX Ports
 EXPOSE 80
