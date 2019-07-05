@@ -1,43 +1,82 @@
 # Base Image
-FROM amazonlinux:2018.03
+FROM amazonlinux:2
 CMD ["/bin/bash"]
 
 # Maintainer
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.3.8"
-LABEL description="ProcessMaker 3.3.8 Docker Container."
+LABEL version="ProcessMaker 4"
+LABEL description="ProcessMaker 4 Beta 7 Portainer Bundle"
 
+# Declare ARGS and ENV Variable
+ARG NAME
+ENV NAME $NAME
+ARG ECHOPORT
+ENV ECHOPORT $ECHOPORT
+ARG VIRTUAL_HOST
+ENV VIRTUAL_HOST $VIRTUAL_HOST
 # Initial steps
-RUN yum clean all && yum install epel-release -y && yum update -y
+RUN yum clean all -y && yum update -y
+RUN amazon-linux-extras install -y epel
+RUN amazon-linux-extras install -y php7.2
 RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new && cp -f ~/hosts.new /etc/hosts
+
+# mysql
+RUN yum localinstall -y https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm
+RUN yum install -y mysql-community-server
 
 # Required packages
 RUN yum install \
+  vim \
   wget \
+  curl \
+  tar.x86_64 \
+  rsync \
+  sudo \
   nano \
   sendmail \
   nginx \
-  php71-fpm \
-  php71-opcache \
-  php71-gd \
-  php71-mysqlnd \
-  php71-soap \
-  php71-mbstring \
-  php71-ldap \
-  php71-mcrypt \
+  redis \
+  cronie \
+  php-fpm \
+  php-apcu \
+  php-pdo \
+  php-opcache \
+  php-gd \
+  php-zip \
+  php-mysqlnd \
+  php-soap \
+  php-dom \
+  php-posix \
+  php-mbstring \
+  php-ldap \
   -y
-  
-# Download ProcessMaker Enterprise Edition
-RUN wget -O "/tmp/processmaker-3.3.8.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.3.8.tar.gz"
-	  
+
+# Nodejs Npm
+RUN cd /tmp && curl -sL https://rpm.nodesource.com/setup_12.x | /bin/bash -
+RUN yum install -y nodejs
+
+# Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
+RUN wget -O "/tmp/pm4-portainer.tar.gz" \
+      "https://s3.amazonaws.com/artifacts.processmaker.net/trial/pm4-portainer-beta7.tar.gz"
+
+# Composer
+RUN cd /tmp && wget https://getcomposer.org/download/1.8.6/composer.phar
+RUN cd /tmp && chmod 775 composer.phar && mv composer.phar /usr/local/bin/composer
+RUN cp /usr/local/bin/composer /usr/bin/composer
+RUN mkdir /root/.composer
+RUN mkdir /root/.config
+RUN mkdir /root/.config/composer/
+COPY conf/auth.json /root/.config/composer/
+COPY conf/auth.json /root/.composer/
+
 # Copy configuration files
-COPY processmaker-fpm.conf /etc/php-fpm.d
+RUN mkdir /root/scripts
+COPY conf/processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
-COPY nginx.conf /etc/nginx
-COPY processmaker.conf /etc/nginx/conf.d
+COPY conf/nginx.conf /etc/nginx
+COPY conf/processmaker.conf /etc/nginx/conf.d
 
 # NGINX Ports
 EXPOSE 80
@@ -45,4 +84,5 @@ EXPOSE 80
 # Docker entrypoint
 COPY docker-entrypoint.sh /bin/
 RUN chmod a+x /bin/docker-entrypoint.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
