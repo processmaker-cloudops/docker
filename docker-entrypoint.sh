@@ -17,8 +17,11 @@ sed -i '/;opcache.validate_timestamps=1/c\opcache.validate_timestamps=1' /etc/ph
 sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcache.ini
 
 # Decompress ProcessMaker
-cd /tmp && tar -C /opt -xzvf processmaker-3.3.8.tar.gz
+cd /tmp && tar -C /opt -xzvf processmaker-3.3.10.tar.gz
 chown -R nginx. /opt/processmaker
+
+# Set NGINX server_name
+sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/processmaker.conf
 
 # Start services
 cp /etc/hosts ~/hosts.new
