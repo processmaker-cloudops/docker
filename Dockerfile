@@ -9,6 +9,7 @@ MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 LABEL version="3.4.0"
 LABEL description="ProcessMaker 3.4.0 Enterprise Trial Container."
 
+
 # Declare ARGS and ENV Variable
 ARG WORKSPACE
 ARG EMAIL
