@@ -18,7 +18,7 @@ sed -i '/;opcache.validate_timestamps=1/c\opcache.validate_timestamps=1' /etc/ph
 sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcache.ini
 
 # Decompress ProcessMaker and Plugins
-cd /tmp && tar -C /opt -xzvf processmaker-3.3.6.tar.gz
+cd /tmp && tar -C /opt -xzvf processmaker-3.4.0.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 
 # Set user email for Intercom
@@ -50,4 +50,5 @@ cp -f ~/hosts.new /etc/hosts
 chkconfig sendmail on && service sendmail start
 chkconfig nginx on && chkconfig php-fpm on
 touch /etc/sysconfig/network
+cd /opt/processmaker && ./processmaker artisan queue:work --workspace=$WORKSPACE &
 service php-fpm start && nginx -g 'daemon off;'
