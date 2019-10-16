@@ -50,5 +50,5 @@ cp -f ~/hosts.new /etc/hosts
 chkconfig sendmail on && service sendmail start
 chkconfig nginx on && chkconfig php-fpm on
 touch /etc/sysconfig/network
-cd /opt/processmaker && ./processmaker artisan queue:work --workspace=$WORKSPACE &
+cd /opt/processmaker && ./processmaker artisan queue:work --workspace=$WORKSPACE --sleep=3 --tries=3 --daemon &
 service php-fpm start && nginx -g 'daemon off;'
