@@ -24,6 +24,7 @@ RUN yum install \
   nano \
   sendmail \
   nginx \
+  mysql56 \
   php71-fpm \
   php71-opcache \
   php71-gd \
