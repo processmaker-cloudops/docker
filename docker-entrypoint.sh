@@ -26,7 +26,7 @@ chown -R nginx. /opt/processmaker
 sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/processmaker.conf
 
 # Workspace restore for Enterprise Bundle
-cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE
+cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE && sleep 5
 cd /opt/processmaker && ./processmaker flush-cache
 cd /opt/processmaker/workflow/engine/bin
 php -f cron.php calculated && php -f cron.php calculatedapp && php -f cron.php report_by_user +init-date"2018-01-01" && php -f cron.php report_by_process +init-date"2018-01-01"
