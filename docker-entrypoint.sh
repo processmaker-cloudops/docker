@@ -33,7 +33,6 @@ php -f cron.php calculated && php -f cron.php calculatedapp && php -f cron.php r
 
 # Set file ownership
 chown -R nginx. /opt/processmaker
-chown root. /opt/processmaker/workflow/engine/config/blacklist.ini
 
 # Start services
 cp /etc/hosts ~/hosts.new
