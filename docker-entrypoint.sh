@@ -18,10 +18,21 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 
 # Decompress ProcessMaker
 cd /tmp && tar -C /opt -xzvf processmaker-3.4.0.tar.gz
+cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 chown -R nginx. /opt/processmaker
 
 # Set NGINX server_name
 sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/processmaker.conf
+
+# Workspace restore for Enterprise Bundle
+cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE
+cd /opt/processmaker && ./processmaker flush-cache
+cd /opt/processmaker/workflow/engine/bin
+php -f cron.php calculated && php -f cron.php calculatedapp && php -f cron.php report_by_user +init-date"2018-01-01" && php -f cron.php report_by_process +init-date"2018-01-01"
+
+# Set file ownership
+chown -R nginx. /opt/processmaker
+chown root. /opt/processmaker/workflow/engine/config/blacklist.ini
 
 # Start services
 cp /etc/hosts ~/hosts.new
@@ -30,4 +41,5 @@ cp -f ~/hosts.new /etc/hosts
 chkconfig sendmail on && service sendmail start
 chkconfig nginx on && chkconfig php-fpm on
 touch /etc/sysconfig/network
+cd /opt/processmaker && ./processmaker artisan queue:work --workspace=$WORKSPACE --sleep=3 --tries=3 --daemon &
 service php-fpm start && nginx -g 'daemon off;'

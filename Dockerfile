@@ -6,12 +6,12 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.3.17"
+LABEL version="3.4.0"
 LABEL description="ProcessMaker 3.4.0 Docker Container."
 
 # Declare ARGS and ENV Variables
-ARG URL
-ENV URL $URL
+ARG WORKSPACE
+ENV WORKSPACE $WORKSPACE
 
 # Initial steps
 RUN yum clean all && yum install epel-release -y && yum update -y
@@ -37,6 +37,8 @@ RUN yum install \
 # Download ProcessMaker Enterprise Edition
 RUN wget -O "/tmp/processmaker-3.4.0.tar.gz" \
       "https://artifacts.processmaker.net/official/processmaker-3.4.0.tar.gz"
+RUN wget -O "/tmp/bundle.tar.gz" \
+      "https://artifacts.processmaker.net/trial/portainer-bundle-3.4.0.tar.gz"
 	  
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
