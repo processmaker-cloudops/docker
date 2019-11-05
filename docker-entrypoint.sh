@@ -19,6 +19,7 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
 # Decompress ProcessMaker
 cd /tmp && tar -C /opt -xzvf processmaker-3.4.0.tar.gz
 cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
+cd /tmp && cp paths_installed.php /opt/processmaker/workflow/engine/config/paths_installed.php
 chown -R nginx. /opt/processmaker
 
 # Set NGINX server_name

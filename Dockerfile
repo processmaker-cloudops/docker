@@ -45,6 +45,7 @@ COPY processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
 COPY nginx.conf /etc/nginx
 COPY processmaker.conf /etc/nginx/conf.d
+COPY paths_installed.php /tmp
 
 # NGINX Ports
 EXPOSE 80
