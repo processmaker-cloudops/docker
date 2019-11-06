@@ -29,6 +29,7 @@ sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/proces
 # Workspace restore for Enterprise Bundle
 cd /tmp && tar -xvf workspace.tar
 mv /tmp/test340.files /opt/processmaker/shared/sites/$WORKSPACE
+mysql -u RDSPortainer -pD9PZ82hadX78dp*3 -h portainer.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -e "CREATE DATABASE IF NOT EXISTS $WORKSPACE"
 mysql -u RDSPortainer -pD9PZ82hadX78dp*3 -h portainer.ckz0mnb6cuna.us-east-1.rds.amazonaws.com $WORKSPACE < /tmp/wf_test340.sql
 
 #cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE && sleep 5
