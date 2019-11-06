@@ -32,7 +32,7 @@ cd /tmp && tar -xvf workflow.tar
 mv /tmp/test340.files /opt/processmaker/shared/sites/$WORKSPACE
 sed -i 's/##WORKSPACE##/'"$WORKSPACE"'/g' /opt/processmaker/shared/sites/$WORKSPACE/db.php
 mysql -u RDSPortainer -pD9PZ82hadX78dp*3 -h portainer.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -e "CREATE DATABASE IF NOT EXISTS wf_$WORKSPACE"
-mysql -u RDSPortainer -pD9PZ82hadX78dp*3 -h portainer.ckz0mnb6cuna.us-east-1.rds.amazonaws.com $WORKSPACE < /tmp/wf_test340.sql
+mysql -u RDSPortainer -pD9PZ82hadX78dp*3 -h portainer.ckz0mnb6cuna.us-east-1.rds.amazonaws.com wf_$WORKSPACE < /tmp/wf_test340.sql
 
 #cd /opt/processmaker && ./processmaker workspace-restore -o /tmp/workflow.tar $WORKSPACE && sleep 5
 cd /opt/processmaker && ./processmaker flush-cache
