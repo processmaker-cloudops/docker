@@ -22,6 +22,7 @@ cd /tmp && tar -C /tmp -xzvf bundle.tar.gz
 cd /tmp && cp paths_installed.php /opt/processmaker/workflow/engine/config/paths_installed.php
 chown -R nginx. /opt/processmaker
 mkdir /opt/processmaker/shared/sites
+sed -i 's/##WORKSPACE##/'"$WORKSPACE"'/g' /opt/processmaker/shared/sites/$WORKSPACE/db.php
 
 # Set NGINX server_name
 sed -i 's,server_name ~^.*$;,server_name '"${URL}"';,g' /etc/nginx/conf.d/processmaker.conf
