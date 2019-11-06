@@ -39,7 +39,7 @@ RUN yum install \
 RUN wget -O "/tmp/processmaker-3.4.0.tar.gz" \
       "https://artifacts.processmaker.net/official/processmaker-3.4.0.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
-      "https://artifacts.processmaker.net/trial/portainer-bundle-3.4.0.tar.gz"
+      "https://s3.amazonaws.com/artifacts.processmaker.net/trial/portainer-bundle-3.4.0.tar.gz"
 	  
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
