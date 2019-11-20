@@ -17,7 +17,7 @@ sed -i '/;opcache.validate_timestamps=1/c\opcache.validate_timestamps=1' /etc/ph
 sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcache.ini
 
 # Decompress ProcessMaker
-cd /tmp && tar -C /opt -xzvf processmaker-3.4.0.tar.gz
+cd /tmp && tar -C /opt -xzvf processmaker-3.4.2.tar.gz
 chown -R nginx. /opt/processmaker
 
 # Set NGINX server_name
@@ -30,5 +30,5 @@ cp -f ~/hosts.new /etc/hosts
 chkconfig sendmail on && service sendmail start
 chkconfig nginx on && chkconfig php-fpm on
 touch /etc/sysconfig/network
-#cd /opt/processmaker && ./processmaker artisan queue:work --workspace=$WORKSPACE --sleep=3 --tries=3 --daemon &
+sed -i "s/'default' => env('QUEUE_CONNECTION', 'database'),/'default' => env('QUEUE_CONNECTION', 'sync'),/" /opt/processmaker/config/queue.php
 service php-fpm start && nginx -g 'daemon off;'
