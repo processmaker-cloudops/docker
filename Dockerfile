@@ -36,7 +36,7 @@ RUN yum install \
   -y
   
 # Download ProcessMaker Enterprise Edition
-RUN wget -O "/tmp/processmaker-3.4.0.tar.gz" \
+RUN wget -O "/tmp/processmaker-3.4.2.tar.gz" \
       "https://artifacts.processmaker.net/official/processmaker-3.4.2.tar.gz"
 	  
 # Copy configuration files
