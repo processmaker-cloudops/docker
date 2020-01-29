@@ -6,8 +6,8 @@ CMD ["/bin/bash"]
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.4.0"
-LABEL description="ProcessMaker 3.4.0 Enterprise Trial Container."
+LABEL version="3.4.6"
+LABEL description="ProcessMaker 3.4.6 Enterprise Trial Container."
 
 
 # Declare ARGS and ENV Variable
@@ -39,10 +39,10 @@ RUN yum install \
   -y
 
 # Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
-RUN wget -O "/tmp/processmaker-3.4.0.tar.gz" \
-      "https://artifacts.processmaker.net/trial/processmaker-3.4.0.tar.gz"
+RUN wget -O "/tmp/processmaker-3.4.6.tar.gz" \
+      "https://artifacts.processmaker.net/trial/processmaker-3.4.6.tar.gz"
 RUN wget -O "/tmp/bundle.tar.gz" \
-      "https://artifacts.processmaker.net/trial/bundle-3.4.0.tar.gz"
+      "https://artifacts.processmaker.net/trial/bundle-3.4.6.tar.gz"
 
 # Copy configuration files
 COPY processmaker-fpm.conf /etc/php-fpm.d
