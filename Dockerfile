@@ -1,49 +1,90 @@
 # Base Image
-FROM amazonlinux:2018.03
+FROM amazonlinux:2
 CMD ["/bin/bash"]
 
 # Maintainer
 MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
-LABEL version="3.4.2"
-LABEL description="ProcessMaker 3.4.2 Docker Container."
+LABEL version="ProcessMaker 4"
+LABEL description="ProcessMaker 4 Enterprise Trial Bundle"
 
-# Declare ARGS and ENV Variables
-ARG URL
-ENV URL $URL
+# Declare ARGS and ENV Variable
+ARG WORKSPACE
+ENV WORKSPACE $WORKSPACE
+ARG EMAIL
+ENV EMAIL $EMAIL
 
 # Initial steps
-RUN yum clean all && yum install epel-release -y && yum update -y
-RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new && cp -f ~/hosts.new /etc/hosts
+RUN yum clean all -y && yum update -y
+RUN amazon-linux-extras install -y epel
+RUN amazon-linux-extras install -y php7.3
+RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain
+`hostname`" ~/hosts.new && cp -f ~/hosts.new /etc/hosts
+
+# mysql
+RUN yum localinstall -y https://repo.mysql.com//mysql57-community-release-el7-11.noarch.rpm
+RUN yum install -y mysql-community-server
 
 # Required packages
 RUN yum install \
-  wget \
   vim \
+  wget \
+  curl \
+  tar.x86_64 \
+  sudo \
   nano \
   sendmail \
   nginx \
-  mysql56 \
-  php71-fpm \
-  php71-opcache \
-  php71-gd \
-  php71-mysqlnd \
-  php71-soap \
-  php71-mbstring \
-  php71-ldap \
-  php71-mcrypt \
+  redis \
+  cronie \
+  php-fpm \
+  php-apcu \
+  php-pdo \
+  php-bcmath \
+  php-opcache \
+  php-gd \
+  php-zip \
+  php-mysqlnd \
+  php-soap \
+  php-dom \
+  php-posix \
+  php-mbstring \
+  php-ldap \
+  php-devel \
+  php-pecl-apcu \
+  php-xml \
+  libc-client-devel \
+  uw-imap-static \
   -y
-  
-# Download ProcessMaker Enterprise Edition
-RUN wget -O "/tmp/processmaker-3.4.2.tar.gz" \
-      "https://artifacts.processmaker.net/official/processmaker-3.4.2.tar.gz"
-	  
+
+# Development Tools and imap
+RUN yum groupinstall -y "Development Tools"
+
+# Nodejs Npm
+RUN cd /tmp && curl -sL https://rpm.nodesource.com/setup_12.x | /bin/bash -
+RUN yum install -y nodejs
+
+# Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
+RUN wget -O "/tmp/pm4-trials.tar.gz" \
+      "https://s3.amazonaws.com/artifacts.processmaker.net/trial/pm4-trials.tar.gz"
+
+# Composer
+RUN cd /tmp && wget https://getcomposer.org/download/1.8.6/composer.phar
+RUN cd /tmp && chmod 775 composer.phar && mv composer.phar /usr/local/bin/composer
+RUN cp /usr/local/bin/composer /usr/bin/composer
+RUN mkdir /root/.composer
+RUN mkdir /root/.config
+RUN mkdir /root/.config/composer/
+COPY conf/auth.json /root/.config/composer/
+COPY conf/auth.json /root/.composer/
+
 # Copy configuration files
-COPY processmaker-fpm.conf /etc/php-fpm.d
+RUN mkdir /root/scripts
+COPY conf/processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
-COPY nginx.conf /etc/nginx
-COPY processmaker.conf /etc/nginx/conf.d
+COPY conf/nginx.conf /etc/nginx
+COPY conf/processmaker.conf /etc/nginx/conf.d
 
 # NGINX Ports
 EXPOSE 80
@@ -51,4 +92,5 @@ EXPOSE 80
 # Docker entrypoint
 COPY docker-entrypoint.sh /bin/
 RUN chmod a+x /bin/docker-entrypoint.sh
+
 ENTRYPOINT ["docker-entrypoint.sh"]
