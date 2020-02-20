@@ -23,9 +23,13 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
         # Set NGINX server_name
         sed -i "s,%%WORKSPACE%%,${WORKSPACE},g" /etc/nginx/conf.d/processmaker.conf
 
+        # Copy echo-server conf
+        rm -Rf /opt/processmaker/laravel-echo-server.json
+        cp /tmp/laravel-echo-server.json /opt/processmaker/laravel-echo-server.json
+
         # Create DB if necessary and import
-        mysql -u RDSPortainer -h portainer-spark-aurora.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -pD9PZ82hadX78dp*3 -f -e "CREATE DATABASE IF NOT EXISTS $WORKSPACE;"
-        mysql -u RDSPortainer -h portainer-spark-aurora.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -pD9PZ82hadX78dp*3 ${WORKSPACE} < /opt/processmaker/dbdump.sql
+        mysql -u RDSTrialsMaster -h pm4-trials-instance-1.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -pl3\&9IiuyPhW\!cJl0bqk -f -e "CREATE DATABASE IF NOT EXISTS $WORKSPACE;"
+        mysql -u RDSTrialsMaster -h pm4-trials-instance-1.ckz0mnb6cuna.us-east-1.rds.amazonaws.com -pl3\&9IiuyPhW\!cJl0bqk ${WORKSPACE} < /opt/processmaker/dbdump.sql
 
         # Update .env, Set file ownership, and seed db
         mkdir -p /opt/processmaker/tmp
@@ -49,8 +53,6 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
         redis-server --daemonize yes
         php /opt/processmaker/artisan horizon &
         rm -Rf /opt/processmaker/laravel-echo-server.lock
-        cd /opt/processmaker && /usr/local/bin/composer require processmaker/package-actions-by-email
-        cd /opt/processmaker && php artisan package:install package-actions-by-email --no-interaction
         sleep 1
         chown -R nginx:nginx /opt/processmaker
         cd /opt/processmaker && node /opt/processmaker/node_modules/laravel-echo-server/bin/server.js start
