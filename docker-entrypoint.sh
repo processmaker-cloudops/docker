@@ -34,6 +34,8 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
         # Update .env, Set file ownership, and seed db
         mkdir -p /opt/processmaker/tmp
         sed -i "s/%%WORKSPACE%%/${WORKSPACE}/g" /opt/processmaker/.env
+		echo "PROXIES=*" >> /opt/processmaker/.env
+		echo "PROXIES_AWS=true" >> /opt/processmaker/.env
 
         # Cron config
         echo "* * * * * nginx \"cd /opt/processmaker && /usr/bin/php artisan schedule:run >> /var/log/scheduler.log 2>&1\"" >> /etc/crontab
