@@ -7,7 +7,7 @@ MAINTAINER ProcessMaker CloudOps <cloudops@processmaker.com>
 
 # Extra
 LABEL version="ProcessMaker 4"
-LABEL description="ProcessMaker 4 Enterprise Trial Bundle"
+LABEL description="ProcessMaker 4 Production Build"
 
 # Declare ARGS and ENV Variable
 ARG WORKSPACE
@@ -64,9 +64,9 @@ RUN yum groupinstall -y "Development Tools"
 RUN cd /tmp && curl -sL https://rpm.nodesource.com/setup_12.x | /bin/bash -
 RUN yum install -y nodejs
 
-# Download ProcessMaker Enterprise Edition, Enterprise Bundle and Plugins
-RUN wget -O "/tmp/pm4-trials.tar.gz" \
-      "https://s3.amazonaws.com/artifacts.processmaker.net/trial/pm4-trials.tar.gz"
+# Certs
+RUN mkdir /etc/nginx/ssl
+RUN aws s3 cp s3://pm4-prod-stress/certs.tar.gz /etc/nginx/ssl/certs.tar.gz
 
 # Composer
 RUN cd /tmp && wget https://getcomposer.org/download/1.8.6/composer.phar
@@ -84,10 +84,9 @@ COPY conf/processmaker-fpm.conf /etc/php-fpm.d
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bk
 COPY conf/nginx.conf /etc/nginx
 COPY conf/processmaker.conf /etc/nginx/conf.d
-COPY conf/laravel-echo-server.json /tmp
 
 # NGINX Ports
-EXPOSE 80
+EXPOSE 80 443
 
 # Docker entrypoint
 COPY docker-entrypoint.sh /bin/
