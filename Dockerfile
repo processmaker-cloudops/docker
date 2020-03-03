@@ -64,9 +64,8 @@ RUN yum groupinstall -y "Development Tools"
 RUN cd /tmp && curl -sL https://rpm.nodesource.com/setup_12.x | /bin/bash -
 RUN yum install -y nodejs
 
-# Certs
+# Cert dir
 RUN mkdir /etc/nginx/ssl
-RUN aws s3 cp s3://pm4-prod-stress/certs.tar.gz /etc/nginx/ssl/certs.tar.gz
 
 # Composer
 RUN cd /tmp && wget https://getcomposer.org/download/1.8.6/composer.phar
