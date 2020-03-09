@@ -17,6 +17,7 @@ ENV EMAIL $EMAIL
 
 # Initial steps
 RUN yum clean all -y && yum update -y
+RUN yum install aws-cli
 RUN amazon-linux-extras install -y epel
 RUN amazon-linux-extras install -y php7.3
 RUN cp /etc/hosts ~/hosts.new && sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new && cp -f ~/hosts.new /etc/hosts
