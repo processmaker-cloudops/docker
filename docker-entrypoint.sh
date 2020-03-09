@@ -26,7 +26,6 @@ sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcac
         sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new
         cp -f ~/hosts.new /etc/hosts
         chkconfig nginx on && chkconfig php-fpm on
-        chown -R nginx:nginx /opt/processmaker
         sleep 5
         touch /etc/sysconfig/network
         /usr/sbin/php-fpm --daemonize && /usr/sbin/nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
