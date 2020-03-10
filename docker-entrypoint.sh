@@ -17,10 +17,7 @@ sed -i '/;opcache.use_cwd=1/c\opcache.use_cwd=1' /etc/php.d/10-opcache.ini
 sed -i '/;opcache.validate_timestamps=1/c\opcache.validate_timestamps=1' /etc/php.d/10-opcache.ini
 sed -i '/;opcache.fast_shutdown=0/c\opcache.fast_shutdown=1' /etc/php.d/10-opcache.ini
 
-        # certs
-		/usr/bin/aws s3 cp s3://pm4-prod-stress/certs.tar.gz /etc/nginx/ssl/certs.tar.gz
-		cd /etc/nginx/ssl && tar -xzvf certs.tar.gz
-		
+
 		# Start services
         cp /etc/hosts ~/hosts.new
         sed -i "/127.0.0.1/c\127.0.0.1 localhost localhost.localdomain `hostname`" ~/hosts.new
